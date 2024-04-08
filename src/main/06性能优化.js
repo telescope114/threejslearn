@@ -1,7 +1,5 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-// 导入动画库
-import gsap from 'gsap'
 
 
 const scene = new THREE.Scene()
@@ -22,6 +20,7 @@ const cubeGeometry = new THREE.BoxGeometry(1, 1, 1)
 const cubeMaterial = new THREE.MeshBasicMaterial({color: 0x00ffff})
 const cube = new THREE.Mesh(cubeGeometry, cubeMaterial)
 scene.add( cube )
+console.log(cube);
 
 const renderer = new THREE.WebGLRenderer()
 renderer.setSize(window.innerWidth, window.innerHeight)
@@ -29,26 +28,11 @@ document.body.appendChild(renderer.domElement)
 renderer.render(scene, camera)
 
 const controls = new OrbitControls(camera, renderer.domElement)
-// 设置时钟
 
-// 设置动画
-gsap.to(cube.position, {
-    x: 5,
-    ease: "power1.in",
-    duration: 5,
-    onComplete: () => {
-        console.log('animation has finished.')
-    }
-})
-gsap.to(cube.rotation, {
-    x: Math.PI * 2,
-    ease: "power1.in",
-    duration: 5
-})
-
-const clock = new THREE.Clock()
-function render() {
+function render(time) {
 	renderer.render(scene, camera)
+    let t = time / 1000
+    cube.position.x = t * 1 % 5
 	requestAnimationFrame(render)
 	controls.update()
 }

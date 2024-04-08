@@ -11,4 +11,4 @@ npm-debug.log
 /.cache
 package-lock.json
 yarn-lock.json
-pnpm-lock.json
+pnpm-lock.yaml
