@@ -1,7 +1,6 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import DoorMaterailJpg from '../assets/textures/door/color.jpg'
-import DoorAlpha from '../assets/textures/door/alpha.jpg'
+import DoorMaterailJpg from '../assets/textures/minecraft.png'
 
 const { PI } = Math
 const scene = new THREE.Scene()
@@ -22,28 +21,21 @@ control.update()
 // 导入纹路
 const textureLoader = new THREE.TextureLoader()
 const texture = textureLoader.load(DoorMaterailJpg)
-const doorAplhaTexture = textureLoader.load(DoorAlpha)
+// texture 纹理显示设置
+// minFilter 当一个纹素覆盖小于一个像素时，贴图将如何采
+// magFilter 当一个纹素覆盖大于一个像素时，贴图将如何采
+texture.minFilter = THREE.NearestFilter
+texture.magFilter = THREE.NearestFilter
+// texture.minFilter = THREE.LinearFilter // 默认值
+// texture.magFilter = THREE.LinearFilter // 默认值
 
 
 const geometry = new THREE.BoxGeometry(4, 4, 4, 4, 4, 4)
 // const geometry = new THREE.CapsuleGeometry(3, 2)
-const material = new THREE.MeshBasicMaterial({
-  map: texture,
-  side: THREE.FrontSide,
-  alphaMap: doorAplhaTexture,
-  transparent: true 
-})
+const material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.FrontSide })
 const cube = new THREE.Mesh(geometry, material)
 cube.position.set(2, 2, 2)
 scene.add(cube)
-
-// 添加平面
-const plane = new THREE.Mesh(
-    new THREE.BufferGeometry(4, 4),
-    THREE.DoubleSide
-)
-plane.position.set(10, 0, 0)
-scene.add(plane)
 
 const render = () => {
     renderer.render(scene, camera)
